@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/board")
@@ -23,7 +24,7 @@ public class BoardController {
     @GetMapping("/list")
     public String list(Model model) {
 
-        var boards = boardRepository.findAll();
+        List<Board> boards = boardRepository.findAll();
         model.addAttribute("boards", boards);
         return "board/list";
     }
