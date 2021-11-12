@@ -16,6 +16,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class BoardController {
 
+    // heroku 배포
     private final BoardRepository boardRepository;
     private final BoardValidator boardValidator;
 
