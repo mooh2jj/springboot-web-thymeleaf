@@ -3,6 +3,7 @@ package com.dsgcode.myhome.controller;
 import com.dsgcode.myhome.model.Board;
 import com.dsgcode.myhome.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
 
@@ -58,6 +59,7 @@ class BoardApiController {
                 });
     }
 
+    @Secured("ROLE_ADMIN")      // ROLE_ADMIN인 사람만 delete할 수 있게 함. -> 접근하면 403 에러가 뜰거임! 403: 보안 접근 에러임!
     @DeleteMapping("/boards/{id}")
     void deleteBoard(@PathVariable Long id) {
         repository.deleteById(id);
