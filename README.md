@@ -1,7 +1,7 @@
 # springboot-web-thymeleaf
 ref.GodCoding
 
-### Maven, BootStrap, Thymeleaf, MariaDB, Security, JPA(Querydsl까지 API 설계) 사용 게시판
+### Maven, BootStrap, Thymeleaf, MariaDB, 페이징처리, Security, JPA(Querydsl까지 API 설계) 사용 게시판
 ![image](https://user-images.githubusercontent.com/62453668/142729436-218f167a-718e-40e1-be9a-33d8b868a270.png)
 <br/>
 ![image](https://user-images.githubusercontent.com/62453668/142729445-3041569c-3146-4ec4-8ff2-47edf1baf5f1.png)
