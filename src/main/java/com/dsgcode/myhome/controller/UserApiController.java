@@ -1,8 +1,11 @@
 package com.dsgcode.myhome.controller;
 
 import com.dsgcode.myhome.model.Board;
+import com.dsgcode.myhome.model.QUser;
 import com.dsgcode.myhome.model.User;
 import com.dsgcode.myhome.repository.UserRepository;
+import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -19,19 +22,45 @@ class UserApiController {
     private final UserRepository repository;
 
 
-    // Aggregate root
-    // tag::get-aggregate-root[]
-    @GetMapping("/users")
+/*    @GetMapping("/users")
     List<User> all() {
 
         List<User> users = repository.findAll();
         log.debug("size 호출전");
-        log.debug("size : {}", users.get(0).getBoards().size());
-
+        users.get(0).getBoards().size();
         log.debug("size 호출후");
         return users;
+    }*/
+
+    @GetMapping("/users")
+    Iterable<User> all(@RequestParam(required = false) String method, @RequestParam(required = false) String text) {
+        Iterable<User> users = null;
+        if("query".equals(method)) {
+            users = repository.findByUsernameQuery(text);
+//        } else if("nativeQuery".equals(method)) {
+//            users = repository.findByUsernameNativeQuery(text);
+        } else if("querydsl".equals(method)) {
+            QUser user = QUser.user;
+//            Predicate predicate = user.username.contains(text);
+//            users = repository.findAll(predicate);
+            BooleanExpression b = user.username.contains(text);     // Predicate를 상속받음
+            if(true){
+                b = b.and(user.username.contains("dsg"));
+            }
+            users = repository.findAll(b);
+
+        } else if("querydslCustom".equals(method)) {
+            users = repository.findByUsernameCustom(text);
+//        } else if("jdbc".equals(method)) {
+//            users = repository.findByUsernameJdbc(text);
+        } else {
+            users = repository.findAll();
+        }
+        return users;
     }
-    // end::get-aggregate-root[]
+
+
+
 
     @PostMapping("/users")
     User newUser(@RequestBody User newUser) {
